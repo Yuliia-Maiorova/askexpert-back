@@ -4,6 +4,7 @@ import createUser from './createUser';
 import loginUser from './loginUser';
 import postQuestion from './postQuestion';
 import answerQuestion from './answerQuestion';
+import upvoteAnswer from './upvoteAnswer';
 
 let router = Router();
 
@@ -17,5 +18,8 @@ router.post('/postQuestion', postQuestion);
 
 // route to answer a question
 router.post('/answerQuestion', answerQuestion);
+
+// route to upvote an answer
+router.post('/upvoteAnswer', answerQuestion);
 
 export default router;
