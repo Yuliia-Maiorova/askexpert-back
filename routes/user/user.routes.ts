@@ -1,8 +1,8 @@
 import { Router } from 'express';
+import { VerifToken } from '../../middlewares/jwt/jwt_verify';
 
 import createUser from './createUser';
 import loginUser from './loginUser';
-import postQuestion from './postQuestion';
 import answerQuestion from './answerQuestion';
 import upvoteAnswer from './upvoteAnswer';
 
@@ -13,13 +13,10 @@ router.post('/create', createUser);
 
 router.post('/login', loginUser);
 
-// route to post a question
-router.post('/postQuestion', postQuestion);
-
 // route to answer a question
-router.post('/answerQuestion', answerQuestion);
+router.post('/answerQuestion/:post_id', VerifToken, answerQuestion);
 
 // route to upvote an answer
-router.post('/upvoteAnswer', answerQuestion);
+router.post('/upvoteAnswer/:answer_id', VerifToken, upvoteAnswer);
 
 export default router;

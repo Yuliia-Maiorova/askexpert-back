@@ -4,10 +4,10 @@ import { Request, Response } from 'express';
 async function postQuestion(req: Request, res: Response) {
     try {
         // get the title and body from the request body
-        const { title, content, owner_id, category_id } = req.body;
+        const { title, content, category_id, id } = req.body;
 
         // check if existant and if not return error
-        if (!title || !content || !owner_id || !category_id) {
+        if (!title || !content || !category_id) {
             return res.status(400).send({message: 'Please provide all the required fields'});
         }
 
@@ -15,7 +15,7 @@ async function postQuestion(req: Request, res: Response) {
         let new_post = await Post.create({
             title,
             content,
-            owner_id,
+            owner_id: id,
             category_id
         });
 

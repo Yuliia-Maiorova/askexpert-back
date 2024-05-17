@@ -2,10 +2,12 @@ import express from 'express';
 const app = express();
 import sequelize from './init/sequelize';
 import bodyParser from 'body-parser';
-// routers for User
-
-import userRouter from './routes/user/user.routes';
 import secret_key from './middlewares/jwt/secret_key';
+
+// routers
+import userRouter from './routes/user/user.routes';
+import answerRouter from './routes/answer/answer.router'
+import questionRouter from './routes/question/question.router';
 
 // allows to read the body of the request
 app.use(bodyParser.json())
@@ -18,6 +20,8 @@ secret_key.generateSecretKey();
 // routes for user
 
 app.use('/user', userRouter);
+app.use('/question', questionRouter);
+app.use('/answer', answerRouter)
 
 // a default route to prevent the server from crashing
 app.use('*', (req, res) => {
