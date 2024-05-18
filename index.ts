@@ -1,6 +1,5 @@
 import express from 'express';
 import cors from 'cors';
-const app = express();
 import sequelize from './init/sequelize';
 import bodyParser from 'body-parser';
 import secret_key from './middlewares/jwt/secret_key';
@@ -9,6 +8,9 @@ import secret_key from './middlewares/jwt/secret_key';
 import userRouter from './routes/user/user.routes';
 import answerRouter from './routes/answer/answer.router'
 import questionRouter from './routes/question/question.router';
+import categoryRouter from './routes/category/category.router'
+
+const app = express();
 
 // allows to read the body of the request
 app.use(bodyParser.json())
@@ -26,6 +28,7 @@ app.use(cors());
 app.use('/user', userRouter);
 app.use('/question', questionRouter);
 app.use('/answer', answerRouter)
+app.use('/category', categoryRouter)
 
 // a default route to prevent the server from crashing
 app.use('*', (req, res) => {
