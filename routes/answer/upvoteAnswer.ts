@@ -4,17 +4,22 @@ import { Request, Response } from 'express';
 async function upvoteAnswer(req: Request, res: Response) {
     try {
         const id = Number(req.params.answer_id)
-        // get the title and body from the request body
-        const { upvote_counter } = req.body;
 
-        // check if existant and if not return error
-        if (!upvote_counter) {
-            return res.status(400).send({message: 'Please provide all the required fields'});
-        }
+        // check if answer exists
+        let answer = await Answer.findOne({
+            where: {id: id},
+            attributes: ['id', 'upvote_counter']
+        })
+
+        // return error if answer not found
+        if (!answer) return res.status(404).send({message: 'Answer not found'})
 
         // update answer upvote counter
+        answer.upvote_counter += 1;
+
+        // update answer
         let update_answer = await Answer.update(
-            { upvote_counter },
+            { upvote_counter: answer.upvote_counter },
             { where: { id } }
         );
 

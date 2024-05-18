@@ -23,7 +23,7 @@ async function rateAnswer(req: Request, res: Response) {
     // send a success message
     res.status(201).send({ message: "Answer rated successfully" });
   } catch (err) {
-    // catch any error ffrom db
+    // catch any error from db
     res.status(500).send({ message: "An error occured while rating the answer" });
   }
 }

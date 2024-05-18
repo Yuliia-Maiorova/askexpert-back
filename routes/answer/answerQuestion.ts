@@ -1,4 +1,5 @@
 import Answer from '../../models/answers.model'
+import Post from '../../models/posts.model'
 import { Request, Response } from 'express';
 
 async function answerQuestion(req: Request, res: Response) {
@@ -13,6 +14,16 @@ async function answerQuestion(req: Request, res: Response) {
         // check if existant and if not return error
         if (!post_id || !content || !upvote_counter || !rating || !approve_counter) {
             return res.status(400).send({message: 'Please provide all the required fields'});
+        }
+
+        // check if post with provided post id exists
+        let post = await Post.findOne({
+            where: { id: post_id }
+        });
+
+        // if post not found return error
+        if (!post) {
+            return res.status(404).send({message: 'Post with this id not found'});
         }
 
         // create a new post
