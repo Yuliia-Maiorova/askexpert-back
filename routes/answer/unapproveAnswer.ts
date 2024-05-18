@@ -23,7 +23,7 @@ async function unapproveAnswer(req: Request, res: Response) {
             { where: { id } }
         );
 
-        // if problem during the update
+        // if problem during the update return error
         if (!update_answer)
             return res.status(404).send({message: 'An error occured while upvoting the answer'});
 

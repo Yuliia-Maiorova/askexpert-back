@@ -8,6 +8,7 @@ async function answerQuestion(req: Request, res: Response) {
         // get the title and body from the request body
         const { id, content, is_expert, upvote_counter, rating, approve_counter } = req.body;
 
+        // check if user is expert
         if (!is_expert)
             return res.status(403).send({message: 'You are not allowed to post an answer'});
 

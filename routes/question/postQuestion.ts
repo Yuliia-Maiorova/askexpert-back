@@ -1,4 +1,5 @@
 import Post from '../../models/posts.model';
+import Category from '../../models/categories.model'
 import { Request, Response } from 'express';
 
 async function postQuestion(req: Request, res: Response) {
@@ -11,7 +12,15 @@ async function postQuestion(req: Request, res: Response) {
             return res.status(400).send({message: 'Please provide all the required fields'});
         }
 
-        // verify if the category exists ...
+        // check if category exists
+        const category = Category.findOne({
+            where: { id: category_id }
+        });
+
+        // if category not found return error
+        if (!category) {
+            return res.status(404).send({message: 'Category with this id not found'});
+        }
 
         // create a new post
         let new_post = await Post.create({
