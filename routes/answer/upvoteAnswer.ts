@@ -4,6 +4,7 @@ import { Request, Response } from 'express';
 async function upvoteAnswer(req: Request, res: Response) {
     try {
         const id = Number(req.params.answer_id)
+        // get the title and body from the request body
 
         // check if answer exists
         let answer = await Answer.findOne({
@@ -13,6 +14,8 @@ async function upvoteAnswer(req: Request, res: Response) {
 
         // return error if answer not found
         if (!answer) return res.status(404).send({message: 'Answer not found'})
+
+        // answer exist ?
 
         // update answer upvote counter
         answer.upvote_counter += 1;
