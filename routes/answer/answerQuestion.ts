@@ -5,7 +5,10 @@ async function answerQuestion(req: Request, res: Response) {
     try {
         const post_id = Number(req.params.post_id);
         // get the title and body from the request body
-        const { id, content, upvote_counter, rating, approve_counter } = req.body;
+        const { id, content, is_expert, upvote_counter, rating, approve_counter } = req.body;
+
+        if (!is_expert)
+            return res.status(403).send({message: 'You are not allowed to post an answer'});
 
         // check if existant and if not return error
         if (!post_id || !content || !upvote_counter || !rating || !approve_counter) {
