@@ -52,7 +52,6 @@ Posts.init(
     category_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
       references: {
         model: 'Categories',
         key: 'id',

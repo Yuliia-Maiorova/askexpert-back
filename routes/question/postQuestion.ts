@@ -11,6 +11,8 @@ async function postQuestion(req: Request, res: Response) {
             return res.status(400).send({message: 'Please provide all the required fields'});
         }
 
+        // verify if the category exists ...
+
         // create a new post
         let new_post = await Post.create({
             title,

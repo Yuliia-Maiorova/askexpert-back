@@ -26,6 +26,10 @@ router.post('/rate', VerifToken, rateAnswer);
 
 router.post('/upvote/:answer_id', VerifToken, upvoteAnswer);
 
+// route to downvote an answer
+
+router.post('/downvote/:answer_id', VerifToken);
+
 // approve un answer
 
 router.post('/approve/answer_id', VerifToken, approveAnswer);
