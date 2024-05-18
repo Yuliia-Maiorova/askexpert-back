@@ -15,6 +15,8 @@ async function answerQuestion(req: Request, res: Response) {
             return res.status(400).send({message: 'Please provide all the required fields'});
         }
 
+        // post exist ?
+
         // create a new post
         let new_answer = await Answer.create({
             owner_id: id,

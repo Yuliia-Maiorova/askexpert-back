@@ -5,16 +5,18 @@ async function upvoteAnswer(req: Request, res: Response) {
     try {
         const id = Number(req.params.answer_id)
         // get the title and body from the request body
-        const { upvote_counter } = req.body;
+        const { upvote_counter } = req.body; // better not send
 
         // check if existant and if not return error
         if (!upvote_counter) {
             return res.status(400).send({message: 'Please provide all the required fields'});
         }
 
+        // answer exist ?
+
         // update answer upvote counter
         let update_answer = await Answer.update(
-            { upvote_counter },
+            { upvote_counter }, // add one
             { where: { id } }
         );
 
