@@ -1,4 +1,5 @@
 import express from 'express';
+import cors from 'cors';
 const app = express();
 import sequelize from './init/sequelize';
 import bodyParser from 'body-parser';
@@ -16,6 +17,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // generate secret key
 
 secret_key.generateSecretKey();
+
+// Enable CORS
+app.use(cors());
 
 // routes for user
 
