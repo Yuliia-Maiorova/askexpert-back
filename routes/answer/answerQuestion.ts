@@ -19,6 +19,13 @@ async function answerQuestion(req: Request, res: Response) {
             return res.status(400).send({message: 'Please provide all the required fields'});
         }
 
+        let already_answered = await Answer.findOne({
+            where: { owner_id: id, post_id }
+        });
+
+        if (already_answered)
+            return res.status(400).send({message: 'You have already answered this question'});
+
         // check if post with provided post id exists
         let post = await Post.findOne({
             where: { id: post_id }
