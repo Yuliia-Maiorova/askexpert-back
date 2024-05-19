@@ -23,8 +23,8 @@ export const addComment = async (req: Request, res: Response) => {
         // send an error if not
         if (!answer) return res.status(400).json({error: "Answer doesn't exist"})
         // store comment inside the DB
-        const comment = await Comments.create({
-        owner_id,
+        await Comments.create({
+        owner_id: req.body.id,
         answer_id,
         content,
         });
