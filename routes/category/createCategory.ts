@@ -9,7 +9,9 @@ async function createCategory(req: Request, res: Response) {
 
         // create a new category
 
-        const category = await Categories.create(req.body)
+        const category = await Categories.create(
+            {hex_code, name}
+        )
 
         return res.status(201).json(category)
     } catch (e: any) {
