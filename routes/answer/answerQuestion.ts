@@ -8,6 +8,8 @@ async function answerQuestion(req: Request, res: Response) {
         // get the title and body from the request body
         const { id, content, is_expert} = req.body;
 
+        console.log(req.body)
+
         // check if user is expert
         if (!is_expert)
             return res.status(403).send({message: 'You are not allowed to post an answer'});
@@ -40,9 +42,10 @@ async function answerQuestion(req: Request, res: Response) {
 
         // send a success message
         res.status(201).send({message: 'Answer posted successfully'});
-    } catch (err) {
+    } catch (err: any) {
+        console.log(err)
         // catch any error ffrom db
-        res.status(500).send({message: 'An error occured while posting the answer'});
+        res.status(500).send({message: err.message});
     }
 }
 

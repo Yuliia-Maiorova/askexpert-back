@@ -16,7 +16,7 @@ export const addComment = async (req: Request, res: Response) => {
         content,
         });
     res.status(201).json({mesage: "Comment sent"});
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 };

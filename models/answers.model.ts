@@ -39,7 +39,6 @@ Answers.init(
     owner_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
       references: {
         model: 'User',
         key: 'id',
@@ -48,7 +47,6 @@ Answers.init(
     post_id: {
       type: DataTypes.INTEGER,
       allowNull: false,
-      unique: true,
       references: {
         model: 'Posts',
         key: 'id',

@@ -12,7 +12,7 @@ export const getComments = async (req: Request, res: Response) => {
         },
         });
         res.status(200).json({ comments });
-    } catch (error) {
+    } catch (error: any) {
         res.status(500).json({ error: error.message });
     }
 };

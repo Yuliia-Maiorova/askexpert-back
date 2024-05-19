@@ -40,7 +40,7 @@ app.use('*', (req, res) => {
 });
 
 // sync the database
-sequelize.sync().then(() => {
+sequelize.sync({}).then(() => {
     console.log('Database synced');
     // Start the server
     // start the server at PORT
