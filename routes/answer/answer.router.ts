@@ -32,10 +32,10 @@ router.post('/downvote/:answer_id', VerifToken);
 
 // approve un answer
 
-router.post('/approve/answer_id', VerifToken, approveAnswer);
+router.post('/approve/:answer_id', VerifToken, approveAnswer);
 
 // unapprove un answer
 
-router.post('/unapprove/answer_id', VerifToken, unapproveAnswer);
+router.post('/unapprove/:answer_id', VerifToken, unapproveAnswer);
 
 export default router;

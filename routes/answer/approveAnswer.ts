@@ -1,5 +1,6 @@
 import Answer from '../../models/answers.model'
 import { Request, Response } from 'express';
+import ReactionUserAnswer from '../../models/reactionUserAnswer.model';
 
 async function approveAnswer(req: Request, res: Response) {
     try {
@@ -8,27 +9,33 @@ async function approveAnswer(req: Request, res: Response) {
         // check if answer exists
         let answer = await Answer.findOne({
             where: {id: id},
-            attributes: ['id', 'approve_counter']
+            attributes: ['id', 'upvote_counter']
         })
 
-        // return error if answer not found
-        if (!answer) return res.status(404).send({message: 'Answer not found'})
+        if (!answer) return res.status(400).json({error: "answer don't exist"})
 
-        // update answer approve counter
-        answer.approve_counter += 1;
+        // check if the user_already upvote
+        const user_approve = await ReactionUserAnswer.findOne({
+            where: {user_id: req.body.id, answer_id: id}
+        })
 
-        // update answer
-        let update_answer = await Answer.update(
-            { approve_counter: answer.approve_counter },
-            { where: { id } }
-        );
+        if (user_approve) {
+            if (user_approve.approve === true)
+                return res.status(200).json({message: "You already approved this !"})
+            else
+                await ReactionUserAnswer.update({approve: true}, {where: {user_id: req.body.id, answer_id: id}})
+        } else {
+            await ReactionUserAnswer.create({user_id: req.body.id, answer_id: id, approve: true})
+        }
 
-        // if problem during the update
-        if (!update_answer)
-            return res.status(404).send({message: 'An error occured while upvoting the answer'});
+        let approves = await ReactionUserAnswer.findAll({
+            where: {answer_id: id, approve: true}
+        })
 
-        // return success message
-        return res.status(201).send({ message: 'Answer upvoted successfully' })
+        // update the upvote_counter
+        await Answer.update({approve_counter: approves.length}, {where: {id: id}})
+
+        return res.status(201).json({message: "Answer is now approved"})
 
     } catch (err) {
         // catch any error ffrom db
