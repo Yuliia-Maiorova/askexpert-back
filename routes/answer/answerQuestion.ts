@@ -27,7 +27,6 @@ async function answerQuestion(req: Request, res: Response) {
             return res.status(404).send({message: 'Post with this id not found'});
         }
 
-
         // create a new post
         let new_answer = await Answer.create({
             owner_id: id,
