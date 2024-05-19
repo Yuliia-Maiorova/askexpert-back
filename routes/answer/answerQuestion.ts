@@ -8,8 +8,6 @@ async function answerQuestion(req: Request, res: Response) {
         // get the title and body from the request body
         const { id, content, is_expert} = req.body;
 
-        console.log(req.body)
-
         // check if user is expert
         if (!is_expert)
             return res.status(403).send({message: 'You are not allowed to post an answer'});
@@ -24,14 +22,11 @@ async function answerQuestion(req: Request, res: Response) {
             where: { id: post_id }
         });
 
-        console.log("POST")
-
         // if post not found return error
         if (!post) {
             return res.status(404).send({message: 'Post with this id not found'});
         }
 
-        console.log("check")
 
         // create a new post
         let new_answer = await Answer.create({
