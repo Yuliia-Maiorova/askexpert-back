@@ -20,7 +20,7 @@ router.put('/:post_id', VerifToken, answerQuestion);
 
 // route to rate an answer
 
-router.post('/rate', VerifToken, rateAnswer);
+router.post('/rate/:answer_id', VerifToken, rateAnswer);
 
 // route to upvote an answer
 
