@@ -8,8 +8,6 @@ async function answerQuestion(req: Request, res: Response) {
         // get the title and body from the request body
         const { id, content, is_expert} = req.body;
 
-        console.log(req.body)
-
         // check if user is expert
         if (!is_expert)
             return res.status(403).send({message: 'You are not allowed to post an answer'});
@@ -19,10 +17,12 @@ async function answerQuestion(req: Request, res: Response) {
             return res.status(400).send({message: 'Please provide all the required fields'});
         }
 
+        // check if the expert doesn't have already answer to that question
         let already_answered = await Answer.findOne({
             where: { owner_id: id, post_id }
         });
 
+        // don't allow him to re-answer if has already answered before
         if (already_answered)
             return res.status(400).send({message: 'You have already answered this question'});
 

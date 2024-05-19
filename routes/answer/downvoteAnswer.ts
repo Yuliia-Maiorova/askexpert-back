@@ -19,15 +19,20 @@ async function downvoteAnswer(req: Request, res: Response) {
             where: {user_id: req.body.id, answer_id: id}
         })
 
+    // if the user upvote
         if (user_upvote) {
+            // if he has already downvote, send back an error
             if (user_upvote.upvote === false)
                 return res.status(400).json({message: "You already downvoted this !"})
             else
+            // else change his upvote to a downvote
                 await ReactionUserAnswer.update({upvote: false}, {where: {user_id: req.body.id, answer_id: id}})
         } else {
+            // gather his downvote in the DB
             await ReactionUserAnswer.create({user_id: req.body.id, answer_id: id, upvote: false})
         }
     
+        // get all upvotes for this mission storedd in the DB
         let upvotes = await ReactionUserAnswer.findAll({
             where: {answer_id: id, upvote: true}
         })
@@ -35,7 +40,7 @@ async function downvoteAnswer(req: Request, res: Response) {
         // update the upvote_counter
         await Answer.update({upvote_counter: upvotes.length}, {where: {id: id}})
 
-        res.status(201).send({message: 'Answer downvoted successfully'});
+        res.status(201).send({message: 'Answer downvoted successfully', upvote_counter: upvotes.length})
     } catch (err) {
         // catch any error ffrom db
         res.status(500).send({message: 'An error occured while upvoting the answer'});

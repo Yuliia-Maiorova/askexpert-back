@@ -1,15 +1,28 @@
 import { Request, Response } from "express";
 
 import Comments from "../../models/comment.model";
+import Answers from "../../models/answers.model";
 
 export const addComment = async (req: Request, res: Response) => {
     const answer_id = Number(req.params.answer_id);
 
+    // check if the comment is in the body
     if (!req.body.content)
         return res.status(400).json({ error: "Content is required" });
 
+
+
     const { owner_id, content } = req.body;
     try {
+        // check if answer still exist
+
+        const answer = await Answers.findOne({
+            where: req.body.id
+        })
+
+        // send an error if not
+        if (!answer) return res.status(400).json({error: "Answer doesn't exist"})
+        // store comment inside the DB
         const comment = await Comments.create({
         owner_id,
         answer_id,

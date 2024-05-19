@@ -9,6 +9,7 @@ async function getQuestions(req: Request, res: Response) {
             attributes: ['id', 'title', 'content', 'owner_id', 'category_id']
         })
 
+        // get all the reactions of the sender on the differents questions from the DB
         let reactions = await ReactionUserAnswer.findAll({
             where: {user_id: req.body.id},
             attributes: ['answer_id', 'upvote', 'approve']

@@ -15,10 +15,12 @@ async function rateAnswer(req: Request, res: Response) {
       return res.status(400).send({ message: "Please provide all the required fields" });
     }
 
-    const answer = await Answer.findAll({
+    // find the answer in the DB
+    const answer = await Answer.findOne({
       where: { id: answer_id }
     });
 
+    // if answer doesn't exist, send back an error
     if (!answer) return res.status(400).json({error: "Answer doesn't exist"})
 
       // check user rate

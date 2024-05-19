@@ -17,6 +17,7 @@ const app = express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
+// check if a .env have defined a PORT to launch eitherwise launch it at port 3000
 const PORT = process.env.PORT || 3000;
 
 // generate secret key

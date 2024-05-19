@@ -3,6 +3,8 @@ import Categories from '../../models/categories.model';
 
 async function getAllCategories(req: Request, res: Response) {
     try {
+
+        // fetch all categories in the DB
         let categories = await Categories.findAll({
             attributes: ['id', 'name', 'hex_code']
         })
