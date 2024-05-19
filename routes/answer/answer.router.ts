@@ -16,7 +16,7 @@ router.get('/:post_id', VerifToken, getAnwersQuestion);
 
 // answer a question
 
-router.put('/post_id', VerifToken, answerQuestion);
+router.put('/:post_id', VerifToken, answerQuestion);
 
 // route to rate an answer
 
