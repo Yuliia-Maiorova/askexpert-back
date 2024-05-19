@@ -9,6 +9,7 @@ import userRouter from './routes/user/user.routes';
 import answerRouter from './routes/answer/answer.router'
 import questionRouter from './routes/question/question.router';
 import categoryRouter from './routes/category/category.router'
+import commentRouter from './routes/comment/comment.router'
 
 const app = express();
 
@@ -30,6 +31,7 @@ app.use(cors());
 app.use('/user', userRouter);
 app.use('/question', questionRouter);
 app.use('/answer', answerRouter)
+app.use('/comment', commentRouter);
 app.use('/category', categoryRouter)
 
 // a default route to prevent the server from crashing
