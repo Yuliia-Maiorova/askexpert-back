@@ -14,7 +14,7 @@ interface AnswersAttributes {
 }
 
 // Some fields are optional when creating a new Answer
-interface AnswersCreationAttributes extends Optional<AnswersAttributes, 'id' | 'createdAt' | 'updatedAt'> {}
+interface AnswersCreationAttributes extends Optional<AnswersAttributes, 'id' | 'rating' | 'upvote_counter' | 'approve_counter' | 'createdAt' | 'updatedAt'> {}
 
 class Answers extends Model<AnswersAttributes, AnswersCreationAttributes> implements AnswersAttributes {
   public id!: number;

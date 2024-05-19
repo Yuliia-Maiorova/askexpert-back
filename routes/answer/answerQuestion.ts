@@ -32,10 +32,7 @@ async function answerQuestion(req: Request, res: Response) {
         let new_answer = await Answer.create({
             owner_id: id,
             post_id,
-            content,
-            upvote_counter: 0,
-            rating: 0,
-            approve_counter: 0
+            content
         });
 
         // if post not created return error
