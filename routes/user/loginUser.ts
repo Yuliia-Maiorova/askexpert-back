@@ -1,4 +1,4 @@
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import User from '../../models/user.model';
 import generateToken from '../../middlewares/jwt/generateJWT';
 import { Request, Response } from 'express';

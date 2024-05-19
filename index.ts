@@ -9,12 +9,15 @@ import userRouter from './routes/user/user.routes';
 import answerRouter from './routes/answer/answer.router'
 import questionRouter from './routes/question/question.router';
 import categoryRouter from './routes/category/category.router'
+import commentRouter from './routes/comment/comment.router'
 
 const app = express();
 
 // allows to read the body of the request
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const PORT = process.env.PORT || 3000;
 
 // generate secret key
 
@@ -28,6 +31,7 @@ app.use(cors());
 app.use('/user', userRouter);
 app.use('/question', questionRouter);
 app.use('/answer', answerRouter)
+app.use('/comment', commentRouter);
 app.use('/category', categoryRouter)
 
 // a default route to prevent the server from crashing
@@ -39,7 +43,6 @@ app.use('*', (req, res) => {
 sequelize.sync().then(() => {
     console.log('Database synced');
     // Start the server
-    const PORT = 3000;
     // start the server at PORT
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
