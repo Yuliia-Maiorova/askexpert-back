@@ -16,6 +16,8 @@ const app = express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
+const PORT = process.env.port || 3000;
+
 // generate secret key
 
 secret_key.generateSecretKey();
@@ -39,7 +41,6 @@ app.use('*', (req, res) => {
 sequelize.sync().then(() => {
     console.log('Database synced');
     // Start the server
-    const PORT = 3000;
     // start the server at PORT
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}`);
