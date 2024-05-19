@@ -2,7 +2,7 @@ import Answer from '../../models/answers.model'
 import { Request, Response } from 'express';
 import ReactionUserAnswer from '../../models/reactionUserAnswer.model';
 
-async function unapproveAnswer(req: Request, res: Response) {
+async function downvoteAnswer(req: Request, res: Response) {
     try {
         const id = Number(req.params.answer_id)
 
@@ -15,31 +15,31 @@ async function unapproveAnswer(req: Request, res: Response) {
         if (!answer) return res.status(400).json({error: "answer don't exist"})
 
         // check if the user_already upvote
-        const user_approve = await ReactionUserAnswer.findOne({
+        const user_upvote = await ReactionUserAnswer.findOne({
             where: {user_id: req.body.id, answer_id: id}
         })
 
-        if (user_approve) {
-            if (user_approve.approve === false)
-                return res.status(400).json({message: "You already disapproved this !"})
+        if (user_upvote) {
+            if (user_upvote.upvote === false)
+                return res.status(400).json({message: "You already downvoted this !"})
             else
-                await ReactionUserAnswer.update({approve: false}, {where: {user_id: req.body.id, answer_id: id}})
+                await ReactionUserAnswer.update({upvote: false}, {where: {user_id: req.body.id, answer_id: id}})
         } else {
-            await ReactionUserAnswer.create({user_id: req.body.id, answer_id: id, approve: false})
+            await ReactionUserAnswer.create({user_id: req.body.id, answer_id: id, upvote: false})
         }
-        let approves = await ReactionUserAnswer.findAll({
-            where: {answer_id: id, approve: true}
+    
+        let upvotes = await ReactionUserAnswer.findAll({
+            where: {answer_id: id, upvote: true}
         })
 
         // update the upvote_counter
-        await Answer.update({approve_counter: approves.length}, {where: {id: id}})
+        await Answer.update({upvote_counter: upvotes.length}, {where: {id: id}})
 
-        return res.status(201).json({message: "Answer is now disapproved"})
-
+        res.status(201).send({message: 'Answer downvoted successfully'});
     } catch (err) {
         // catch any error ffrom db
         res.status(500).send({message: 'An error occured while upvoting the answer'});
     }
 }
 
-export default unapproveAnswer
+export default downvoteAnswer

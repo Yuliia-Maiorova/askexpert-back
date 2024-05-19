@@ -7,6 +7,7 @@ import answerQuestion from './answerQuestion';
 import getAnwersQuestion from './getAnswersQuestion';
 import approveAnswer from './approveAnswer';
 import unapproveAnswer from './unapproveAnswer';
+import downvoteAnswer from './downvoteAnswer';
 
 const router = Router();
 
@@ -28,7 +29,7 @@ router.post('/upvote/:answer_id', VerifToken, upvoteAnswer);
 
 // route to downvote an answer
 
-router.post('/downvote/:answer_id', VerifToken);
+router.post('/downvote/:answer_id', VerifToken, downvoteAnswer);
 
 // approve un answer
 

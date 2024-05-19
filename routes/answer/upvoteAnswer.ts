@@ -21,7 +21,7 @@ async function upvoteAnswer(req: Request, res: Response) {
 
         if (user_upvote) {
             if (user_upvote.upvote === true)
-                return res.status(200).json({message: "You already upvoted this !"})
+                return res.status(400).json({message: "You already upvoted this !"})
             else
                 await ReactionUserAnswer.update({upvote: true}, {where: {user_id: req.body.id, answer_id: id}})
         } else {

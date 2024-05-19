@@ -21,7 +21,7 @@ async function approveAnswer(req: Request, res: Response) {
 
         if (user_approve) {
             if (user_approve.approve === true)
-                return res.status(200).json({message: "You already approved this !"})
+                return res.status(400).json({message: "You already approved this !"})
             else
                 await ReactionUserAnswer.update({approve: true}, {where: {user_id: req.body.id, answer_id: id}})
         } else {
