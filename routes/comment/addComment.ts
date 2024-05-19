@@ -4,15 +4,15 @@ import Comments from "../../models/comment.model";
 import Answers from "../../models/answers.model";
 
 export const addComment = async (req: Request, res: Response) => {
-    const answer_id = Number(req.params.answer_id);
+    const answer_id = Number(req.params.id);
+
+    console.log(answer_id)
 
     // check if the comment is in the body
     if (!req.body.content)
         return res.status(400).json({ error: "Content is required" });
 
-
-
-    const { owner_id, content } = req.body;
+    const { content } = req.body;
     try {
         // check if answer still exist
 
@@ -30,6 +30,7 @@ export const addComment = async (req: Request, res: Response) => {
         });
     res.status(201).json({mesage: "Comment sent"});
     } catch (error: any) {
+        console.log(error)
         res.status(500).json({ error: error.message });
     }
 };

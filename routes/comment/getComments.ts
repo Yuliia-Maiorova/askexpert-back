@@ -4,7 +4,7 @@ import Comments from "../../models/comment.model";
 import Answers from "../../models/answers.model";
 
 export const getComments = async (req: Request, res: Response) => {
-    const answer_id = Number(req.params.answer_id);
+    const answer_id = Number(req.params.id);
 
     try {
 
