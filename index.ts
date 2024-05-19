@@ -16,7 +16,7 @@ const app = express();
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }));
 
-const PORT = process.env.port || 3000;
+const PORT = process.env.PORT || 3000;
 
 // generate secret key
 
