@@ -38,4 +38,4 @@ router.post('/approve/answer_id', VerifToken, approveAnswer);
 
 router.post('/unapprove/answer_id', VerifToken, unapproveAnswer);
 
-export default Router;
+export default router;

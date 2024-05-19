@@ -6,14 +6,16 @@ async function answerQuestion(req: Request, res: Response) {
     try {
         const post_id = Number(req.params.post_id);
         // get the title and body from the request body
-        const { id, content, is_expert, upvote_counter, rating, approve_counter } = req.body;
+        const { id, content, is_expert} = req.body;
+
+        console.log(req.body)
 
         // check if user is expert
         if (!is_expert)
             return res.status(403).send({message: 'You are not allowed to post an answer'});
 
         // check if existant and if not return error
-        if (!post_id || !content || !upvote_counter || !rating || !approve_counter) {
+        if (!content) {
             return res.status(400).send({message: 'Please provide all the required fields'});
         }
 
@@ -22,19 +24,23 @@ async function answerQuestion(req: Request, res: Response) {
             where: { id: post_id }
         });
 
+        console.log("POST")
+
         // if post not found return error
         if (!post) {
             return res.status(404).send({message: 'Post with this id not found'});
         }
+
+        console.log("check")
 
         // create a new post
         let new_answer = await Answer.create({
             owner_id: id,
             post_id,
             content,
-            upvote_counter,
-            rating,
-            approve_counter
+            upvote_counter: 0,
+            rating: 0,
+            approve_counter: 0
         });
 
         // if post not created return error
